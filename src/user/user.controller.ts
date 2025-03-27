@@ -17,22 +17,19 @@ export class UserController {
       return this.userService.login(loginDto);
     }
   
-    @Post('refresh-token')
+    @Post('refreshToken')
     async refreshToken(@Body() refreshTokenDto: RefreshTokenDto) {
       return this.userService.refreshToken(refreshTokenDto.refreshToken);
     }
   
     @Post('verify/:id')
-    async verifyUser(@Param('id') id: string) {
-      return this.userService.verifyUser(id);
+    async verifyUser(@Param('id') id: string, @Body('verificationCode') verificationCode: string) {
+      return this.userService.verifyUser(id, verificationCode);
     }
   
     @UseGuards(AuthGuard('jwt'))
-    @Patch('change-password/:id')
-    async changePassword(
-      @Param('id') id: string,
-      @Body() changePasswordDto: ChangePasswordDto,
-    ) {
+    @Patch('changePassword/:id')
+    async changePassword(@Param('id') id: string, @Body() changePasswordDto: ChangePasswordDto) {
       return this.userService.changePassword(id, changePasswordDto);
     }
   
